@@ -2,7 +2,7 @@
 
 API REST de cardápio de restaurante, feita com **Node.js + Express**, dados no **MongoDB Atlas**, imagens no **Cloudinary**, login com **segundo fator por e-mail** e testes com **Jest**.
 
-Em produção (Vercel): https://apirestauranteweb2-git-main-andre-71f6.vercel.app/
+Em produção (Vercel): Não subi para a Vercel ainda
 
 ## Tecnologias
 
