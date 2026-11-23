@@ -1,17 +1,12 @@
+import { relogio, partesNoFuso } from "../utils/relogio.js";
+
 export function verificarDiaUtil(req, res, next) {
-    const hoje = new Date();
+    if (process.env.IGNORAR_HORARIO === "true") return next(); // só para testes locais
 
-    const diaDaSemana = hoje.getDay();
+    const { diaSemana } = partesNoFuso(relogio.agora());
 
-    // 0 = Domingo
-    // 1 = Segunda
-    // 2 = Terça
-    // 3 = Quarta
-    // 4 = Quinta
-    // 5 = Sexta
-    // 6 = Sábado
-
-    if (diaDaSemana === 0 || diaDaSemana === 6) {
+    // 0 = Domingo, 6 = Sábado
+    if (diaSemana === 0 || diaSemana === 6) {
         return res.status(403).json({
             erro: "A API não está disponível aos finais de semana."
         });

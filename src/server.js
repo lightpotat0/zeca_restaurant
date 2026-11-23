@@ -1,26 +1,11 @@
-import express from "express";
+import "dotenv/config";
+import app from "./app.js";
 
-import { verificarDiaUtil } from "./middlewares/horario.js";
-import { registrarRequisicao } from "./middlewares/logger.js";
-import logsRoutes from "./routes/logs.routes.js";
-import pratosRoutes from "./routes/pratos.routes.js";
+const PORTA = process.env.PORT || 3000;
 
-const app = express();
+// Na Vercel o app é exportado como função serverless; localmente, sobe o servidor.
+if (!process.env.VERCEL) {
+    app.listen(PORTA, () => console.log(`Servidor rodando em http://localhost:${PORTA}`));
+}
 
-app.use(express.json());
-
-app.use(registrarRequisicao);
-app.use(verificarDiaUtil);
-
-app.get("/", (req, res) => {
-    res.json({
-        mensagem: "API do Restaurante funcionando!"
-    });
-});
-
-app.use(logsRoutes);
-app.use(pratosRoutes); 
-
-app.listen(3000, () => {
-    console.log("Servidor rodando em https://apirestauranteweb2-git-main-andre-71f6.vercel.app/");
-});
+export default app;

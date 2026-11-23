@@ -1,13 +1,11 @@
-import { logs } from "../data/logs.js";
+import Log from "../models/Log.js";
+import { relogio, partesNoFuso } from "../utils/relogio.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
-export function registrarRequisicao(req, res, next) {
-    const agora = new Date();
+export const registrarRequisicao = asyncHandler(async (req, res, next) => {
+    const { data, dataISO, horario } = partesNoFuso(relogio.agora());
 
-    const data = agora.toLocaleDateString("pt-BR");
-    const dataISO = agora.toISOString().split("T")[0];
-    const horario = agora.toLocaleTimeString("pt-BR");
-
-    logs.push({
+    await Log.create({
         data,
         dataISO,
         horario,
@@ -16,4 +14,4 @@ export function registrarRequisicao(req, res, next) {
     });
 
     next();
-}
+});
